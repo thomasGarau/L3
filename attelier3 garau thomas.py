@@ -1,4 +1,6 @@
+from audioop import reverse
 from ctypes.wintypes import LPSC_HANDLE
+from operator import truediv
 from random import random
 import re
 import random 
@@ -181,7 +183,7 @@ def dictionnaire(fichier) ->list:
     file = open(fichier, encoding="utf-8")
     content = []
     line = file.readlines()
-    for l in line:
+    for l in line:   
         #supprime les pays
         a = l.split()
         #eviter de crash en cas de pays qui n'a pas de capital est donc de lignes avec un seule mot
@@ -193,8 +195,8 @@ def dictionnaire(fichier) ->list:
     return content
 
 #retourne le contenu d'un fichier sous forme de dictionnaire organisé par la longueur des mots 
-def remplire_dict() -> dict:
-    list_ville = dictionnaire("capitales.txt")
+def remplire_dict(files) -> dict:
+    list_ville = dictionnaire(files)
     dico = {}
     for e in list_ville:
         #verifie si la cle existe si non la cree avant d'ajouter l'element
@@ -207,7 +209,7 @@ def remplire_dict() -> dict:
 #demande à l'utilisateur de choisir un niveau de difficulté est retourne la partie du dictionnaire correspondante
 def choose_level() -> list:
     level = input("choisisser un niveau de difficulté : facile = 1, normale = 2, difficile = 3")
-    dico = remplire_dict()
+    dico = remplire_dict("capitales.txt")
     list_capitales = []
     if level == "1":
         for key in dico:
@@ -222,7 +224,7 @@ def choose_level() -> list:
     else:
         for key in dico:
             #tout les noms de villes d'une longueur de 6à9
-            if key in range(6,10):
+            if key in range(7,9):
                 list_capitales += dico[key]
     return list_capitales
 
@@ -274,12 +276,173 @@ def runGame():
     else:
         print("félicitation")
 
-runGame()
+#runGame()
 
 
 #exo 4--------------------------------------------------------------------------------
-
 ####
 
+def mot_correspond(mot, motif) ->bool:
+    correspond = True
+    i = 0
+    while correspond and i < len(mot):
+        if mot[i] != motif[i]:
+            correspond = False
+        i+=1
+    return correspond
 
+def present(lettre, mot) ->int:
+    indice = -1
+    i =0
+    while indice == -1 and i < len(mot):
+        if lettre == mot[i]:
+            indice = i
+        i+=1
+    return indice
+
+def mot_possible(lettre, mot) -> bool:
+    match = True
+    i = 0
+    while match and i < len(mot):
+        if mot[i] not in lettre:
+            match = False
+        else:
+            index = lettre.index(mot[i])
+            lettre = lettre[:index] +  lettre[index +1:]
+        i+=1
+    return match
+
+print(mot_correspond("cheval", "cheval"), "true correspond")
+print(mot_correspond("cheval", "aos"), "false correspond")
+print(present("e", "elephant"), " true elephant")
+print(present("Z", "elephant"), "false elephant")
+print(mot_possible("boiujuroan", "bonjour"), "true mot possible")
+print(mot_possible("pareilement", "pareillement"), "false mot possible")
+
+def dictionnaire2(fichier) ->list:
+    file = open(fichier, encoding="utf-8")
+    content = []
+    line = file.read().splitlines()
+    for l in line:   
+        content.append(l)
+    return content
+
+def remplire_dict2(files) -> dict:
+    list_ville = dictionnaire2(files)
+    dico = {}
+    for e in list_ville:
+        #verifie si la cle existe si non la cree avant d'ajouter l'element
+        if len(e) in dico:
+            dico[len(e)] += [e]
+        else: 
+            dico[len(e)] = [e]
+    return dico 
+
+def mot_optimaux(lettre) -> list:
+    dico = remplire_dict2("littre.txt")
+    list_mots_optimaux = []
+    i = 0
+    for key in dico:
+        if key > i:
+            i = key
+    print(i)
+    while i > 0 and len(list_mots_optimaux) == 0:
+        if i in dico:
+            for mot in dico[i]:
+                if mot_possible(lettre, mot):
+                    list_mots_optimaux.append(mot)
+        i-=1
+    return list_mots_optimaux
+
+print(mot_optimaux("madeoile"))
+
+
+#5---------------------------------------------------------------------------------------------------------------
+
+#prend en paramètres un caractere et retourne true si ces ( ou [ ou {
+def ouvrante(car: str) ->bool:
+    return car in ["(", "[", "{"]
+
+#prend en paramètre un caractere et retourne true si ces ) ou ] ou }
+def fermante(car: str) ->bool:
+    return car in [")", "]", "}"]
+
+#prend en parametre un caractere, si celui ci est ( ou [ ou { retourne le caractere fermant ) ] }
+def renverse(car: str) -> str:
+    if fermante(car):
+        if car == ")":
+            car =  chr(ord(car) -1)
+        else:
+             car = chr(ord(car) -2)
+    return car
+
+#prend en param un caractere est retourne true si celui-ci est un opérateur arithmétique
+def operateur(car: str) ->bool:
+    return car in ["*", "+", "=", "-", "/"]
+
+#prend en param un caractere est retourne true si ces un nombre 
+def nombre(car: str) ->bool:
+    return car.isdigit()
+
+#prend en param un caractere est retourne un bool representant ci il est valide ou non (est un int ou opérateur ou ([{}]))
+def caractere_valide(car: int) -> bool:
+    return operateur(car) or nombre(car) or fermante(car) or ouvrante(car) or car == " "
+
+#meme chose mais en utilisant un regex 
+def caractere_valide_regex(car: int) -> bool:
+    regex = "[\d\s(){}+-=\.*\/\]\[]+$"
+    bool = False
+    if re.match(regex, car) is not None:
+        bool = True
+    return bool 
+
+
+print(ouvrante("("), "ouvrante true")
+print(ouvrante("az"), "ouvrante false")
+print(fermante("]"), "fermante true")
+print(fermante("a"), "fermante false")
+print(renverse("]"), "renverse [")
+print(renverse("}"), "renverse {")
+print(renverse(")"), "renverse (")
+print(renverse("az"), "renverse az")
+print(operateur("/"), "operateur true")
+print(operateur("*"), "operateur true")
+print(operateur("3"), "operateur false")
+print(nombre("345"), "nomrbe true")
+print(nombre("ezia"), "nombre false")
+print(caractere_valide_regex("]"), "caractere_valide regex true")
+print(caractere_valide_regex("]a"), "caractere valide regex false")
+print(caractere_valide_regex("a"), "caractere valide regex false")
+
+#prend en param un string verifie que les caractere qui le compose sont valide ainsi que la bonne utilisation des [{()}]
+def verif_parenthese(expression: str)->bool:
+    correcte = True
+    i = 0
+    pile = []
+    while correcte and  i < len(expression):
+        if caractere_valide_regex(expression[i]):
+
+            if expression[i] in ["[","(","{"]:
+                pile.append(expression[i])
+
+            elif expression[i] in ["]", ")", "}"]:
+                if len(pile) > 0:
+                    if pile[len(pile)-1] == renverse(expression[i]):
+                        pile.pop(len(pile) -1)
+                    else:
+                        correcte = False
+                else: 
+                    correcte = False
+        else: 
+            correcte = False
+        i+=1
+    if len(pile) != 0:
+        correcte = False
+
+    return correcte
         
+print(verif_parenthese("8*(10-4) / (6-7) {[]}4**2 + 9.12"), "verif_parenthese true")
+print(verif_parenthese("8*(10-4) / (6-7) [{]}4**2 + 9.12"), "verif_parenthese false")
+print(verif_parenthese("8*(10-4) / 6-7) []}4**2 + 9.12"), "verif_parenthese false")
+print(verif_parenthese("8*(10-4 / (6-7 {[]4**2 + 9.12"), "verif_parenthese false")
+print(verif_parenthese("8*(10-4) / (6-7) zadaz"), "verif_parenthese false")
