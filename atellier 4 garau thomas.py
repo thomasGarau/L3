@@ -44,5 +44,5 @@ print(choose_element_list(lst_test), "choose_element_list")
 print(extract_element_list(lst_test, 3), 3, "extract_element_list 3")
 
 
-#partie 2.1 aezae
+#partie 2.1
 
