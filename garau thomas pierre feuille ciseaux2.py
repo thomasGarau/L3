@@ -40,28 +40,51 @@ def set():
     count_points()
 
 def count_points():
-    LIST = [1,2,3]
+    player2_choice_trad = ""
+    player1_choice_trad = ""
+    match set.player1_choice:
+        case 0:
+            player1_choice_trad = "pierre"
+        case 1:
+            player1_choice_trad = "ciseaux"
+        case 2:
+            player1_choice_trad = "feuille"
+        case 3:
+            player1_choice_trad = "puits"
+    
+    match set.player2_choice:
+        case 0:
+            player2_choice_trad = "pierre"
+        case 1:
+            player2_choice_trad = "ciseaux"
+        case 2:
+            player2_choice_trad = "feuille"
+        case 3:
+            player2_choice_trad = "puits"
 
     #si les deux joueur joue pareille ex-aequo
     if set.player1_choice == set.player2_choice:
-        print(f"{game.player1_name} à joué {set.player1_choice}, {game.player2_name} à joué {set.player2_choice}, ex-aequo  ")
+        print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, ex-aequo  ")
 
     #si aucun des deux utilise le puits on utilise une liste pour déterminé le vainqueur index précedent = perd index suivant = gagne
     elif set.player1_choice != 3 and set.player2_choice != 3:
-        if LIST[set.player1_choice +1] == set.player2_choice:
+        if set.player1_choice == 2 and set.player2_choice == 0:
             game.player1_score +=1
-            print(f"{game.player1_name} à joué {set.player1_choice}, {game.player2_name} à joué {set.player2_choice}, {game.player1_name} gagne ")
+            print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, {game.player1_name} gagne ")
         else:
-            game.player2_score +=1
-            print(f"{game.player1_name} à joué {set.player1_choice}, {game.player2_name} à joué {set.player2_choice}, {game.player2_name} gagne ")
+            if set.player1_choice +1 == set.player2_choice:
+                game.player1_score +=1
+                print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, {game.player1_name} gagne ")
+            else:
+                game.player2_score +=1
+                print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, {game.player2_name} gagne ")
 
-    #si non on vérifie les deux scénario de viquetoire impliquant puit pour 1 si elle ne sont pas rempli il perd forcement vu qu'il ne peut y'avoir d'égalité 
+    #si non on vérifie les deux scénario de victoire impliquant puit pour 1 si elle ne sont pas rempli il perd forcement vu qu'il ne peut y'avoir d'égalité 
     else:
         if set.player1_choice == 3 and set.player2_choice != 2 or set.player1_choice == 2:
             game.player1_score += 1
-            print(f"{game.player1_name} à joué {set.player1_choice}, {game.player2_name} à joué {set.player2_choice}, {game.player1_name} gagne ")
+            print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, {game.player1_name} gagne ")
         else:
             game.player2_score += 1
-            print(f"{game.player1_name} à joué {set.player1_choice}, {game.player2_name} à joué {set.player2_choice}, {game.player2_name} gagne ")
-    #problème sur les condition pour le comptage de points
+            print(f"{game.player1_name} à joué {player1_choice_trad}, {game.player2_name} à joué {player2_choice_trad}, {game.player2_name} gagne ")
 game()

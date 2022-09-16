@@ -76,3 +76,4 @@ print(test_perf(mix_list, random.shuffle,list_generated_100k, 100), "100k shuffl
 print(test_perf(mix_list, random.sample, list_generated_1k, 100), "1k sample" )
 print(test_perf(mix_list, random.sample, list_generated_10k, 100), "10K sample")
 print(test_perf(mix_list, random.sample,list_generated_100k, 100), "100k sample ")
+

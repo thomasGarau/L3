@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import unittest
 
 #exo 1-----------------------------------------------------------------------------------------------------------------------------
@@ -401,25 +401,20 @@ OBJETS = [1,2,2,3,4,5,5]
 OBJETS2 = [0,1,3,4,5,2,2,0]
 #prend en paramètres une liste d'entier est la repartie dans deux liste de manière a ce que celle-ci ne comporte deux fois le même entier 
 def agencement_vitrine(nbEmplacement, LIST_OBJETS_A_AFFICHER) ->list:
-    VITRINE = []
-    VITRINE2 = []
-    for e in LIST_OBJETS_A_AFFICHER:
-        if e not in VITRINE:
-            if len(VITRINE) < nbEmplacement:
-                VITRINE.append(e)
-            elif e not in VITRINE2: 
-                VITRINE2.append(e)
-            else:
-                for a in VITRINE:
-                    if a not in VITRINE2:
-                        print(VITRINE[VITRINE.index(a)], a)
-                        VITRINE.pop(VITRINE.index(a))
-                        VITRINE2.append(a)
-                        VITRINE.append(e)
+    vitrine = []
+    vitrine2 = []
+    i = 0
+    possible = True
+    list = sorted(LIST_OBJETS_A_AFFICHER)
+    while possible and i <len(list):
+        #si triplons pas possible 
+        if list[i] == list[i+1] and list[i] == list[i+2]:
+            possible = False
         else: 
-            VITRINE2.append(e)
-    return VITRINE, VITRINE2
-print(agencement_vitrine(4,OBJETS), "exo 5")
+            vitrine.append(list[i])
+            vitrine2.append(list[i+1])
+        i +=2
+    return  vitrine, vitrine2
 
 #exo6 ---------------------------------------------------------------------------------------------------------------------------------
 #1
