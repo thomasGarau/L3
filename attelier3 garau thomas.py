@@ -426,7 +426,7 @@ def verif_parenthese(expression: str)->bool:
                 pile.append(expression[i])
 
             elif expression[i] in ["]", ")", "}"]:
-                if len(pile) > 0:
+                if len(pile) > 0:  # utilisé un try catch permet d'éviter les condition
                     if pile[len(pile)-1] == renverse(expression[i]):
                         pile.pop(len(pile) -1)
                     else:
@@ -445,4 +445,5 @@ print(verif_parenthese("8*(10-4) / (6-7) {[]}4**2 + 9.12"), "verif_parenthese tr
 print(verif_parenthese("8*(10-4) / (6-7) [{]}4**2 + 9.12"), "verif_parenthese false")
 print(verif_parenthese("8*(10-4) / 6-7) []}4**2 + 9.12"), "verif_parenthese false")
 print(verif_parenthese("8*(10-4 / (6-7 {[]4**2 + 9.12"), "verif_parenthese false")
+print(verif_parenthese(")8*(10-4 / (6-7 ]4**2 + 9.12"), "verif_parenthese false")
 print(verif_parenthese("8*(10-4) / (6-7) zadaz"), "verif_parenthese false")
