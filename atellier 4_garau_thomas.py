@@ -39,7 +39,6 @@ def extract_element_list(lst: list, nbr_extract: int) -> list:
     a = gen_list_random_int(nbr_extract, 0, len(copy_lst)-1)
     for i in range(0, nbr_extract):
         lst_return.append(copy_lst[a[i]])
-        i+=1
     return lst_return
 
 def sort_list(list)->list :
@@ -74,72 +73,6 @@ def sort_list(list)->list :
 
 
 
-#fonction test performance
-
-def test_perf_loop(function: callable, list_to_mix, nb_execution):
-    start_pc = time.perf_counter()
-    for i in range(0,nb_execution):
-        function(list_to_mix)
-    end_pc = time.perf_counter()
-    return (end_pc - start_pc) / nb_execution
-
-def test_perf(fonction1:callable, fonction2:callable, nb_execution) ->float:
-    list_serie_test_perso = []
-    list_serie_test_base = []
-
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_1k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_5k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_10k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_15k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_20k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_25k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_30k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_35k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_40k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_45k, nb_execution))
-    list_serie_test_perso.append(test_perf_loop(fonction1, list_random_50k, nb_execution))
-
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_1k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_5k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_20k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_25k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_20k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_25k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_30k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_35k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_40k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_45k, nb_execution))
-    list_serie_test_base.append(test_perf_loop(fonction2, list_random_50k, nb_execution))
-    print(list_serie_test_base, list_serie_test_perso)
-    return list_serie_test_perso, list_serie_test_base
-
-def test_perf_extract(fonction1:callable, fonction2:callable, list_to_extract, nb_extract) ->float:
-    start_pc = time.perf_counter()
-    fonction1(list_to_extract, nb_extract)
-    end_pc = time.perf_counter()
-    extract_temps = (end_pc - start_pc) / nb_extract
-
-    start_pc = time.perf_counter()
-    fonction2(list_to_extract, 10000)
-    end_pc = time.perf_counter()
-    sample_temps = (end_pc - start_pc) / nb_extract
-    
-    return extract_temps, sample_temps
-
-
-#testu
-list_random_50k = gen_list_random_int(50000,0,10000)
-list_random_45k = gen_list_random_int(45000,0,10000)
-list_random_40k = gen_list_random_int(40000,0,10000)
-list_random_35k = gen_list_random_int(35000,0,10000)
-list_random_30k = gen_list_random_int(30000,0,10000)
-list_random_25k = gen_list_random_int(25000,0,10000)
-list_random_20k = gen_list_random_int(20000,0,10000)
-list_random_15k = gen_list_random_int(15000,0,10000)
-list_random_10k = gen_list_random_int(10000,0,10000)
-list_random_5k = gen_list_random_int(5000,0,10000)
-list_random_1k = gen_list_random_int(1000,0,10000)
-
 #print(gen_list_random_int(), "gen_list_random_int pas param")
 #print(gen_list_random_int(15, 8,36), "gen_list_random_int pas param")
 lst_test = ["aaa", 1,2,3,8,19,28,89,19902,199033, "bbb", "ccccc", "ddddd", ["aa,", "bbb", "ccc", "ddd", "eeee"]]
@@ -153,23 +86,6 @@ list_inverse_1k = reversed(sorted(gen_list_random_int(1000, 0, 1000)))
 #test perf
 #print(test_perf(mix_list, random.shuffle,list_generated_10k, 100), "10k shuffle ")
 #print(test_perf_extract(extract_element_list, random.sample, list_generated_10k, 10000), "10k sample")
-
-
-def graph(perso,base):
-    list_ordonnees = [i for i in range(0, 55000, 5000)]
-    #Ici on décrit les abscisses
-    #Entre 0 et 5 en 10 points
-    x_axis_list = np.arange(0,0.0002)
-    fig, ax = plt.subplots()
-    #Dessin des courbes, le premier paramètre
-    #correspond aux point d'abscisse le
-    #deuxième correspond aux points d'ordonnées
-    ax.plot(perso,list_ordonnees, 'b*-', label='perso')
-    ax.plot(base,list_ordonnees,'r*-', label='base')
-    ax.set(xlabel='Abscisse x', ylabel='Ordonnée y',title='test performance')
-    ax.legend(loc='upper center', shadow=True, fontsize='x-large')
-    plt.show()
-
 #perso, base = test_perf(sort_list, sorted, 100)
 #graph(perso, base)
 
@@ -248,7 +164,7 @@ def buble_sort(list_to_sort) -> list:
         for j in range(0, i-1):
             if list_copy[j] > list_copy[j+1]:
                 #inverse les position
-                list_copy.insert(j, list_copy.pop(j+1))
+                list_copy[j], list_copy[j+1] = list_copy[j+1], list_copy[j]
                 trie = False
     return list_copy
 
@@ -273,6 +189,27 @@ def merge(list_a, list_b) -> list:
     return valeur_retour
 
 
+def radix_sort(list_to_sort:list)->list:
+    list_copy = copy.deepcopy(list_to_sort)
+    f = len(str(list_to_sort))
+    for i in range(0, f):
+        list_copy = radix_order_sort(10**i, list_copy)  
+    return list_copy
+
+def radix_order_sort(base, list_copy):
+    list_temporaire = [[] for _ in range(0,10)]
+    list_return = []
+    # empacktage
+    for i in range(0, len(list_copy)):
+            if list_copy[i] < base:
+                list_temporaire[0].append(list_copy[i])
+            else:
+                list_temporaire[list_copy[i]%(base*10)//base].append(list_copy[i])
+    #depacktage 
+    for i in range(0,len(list_temporaire)):
+        list_return += list_temporaire[i]
+        
+    return list_return
 
 
 list_stupid = [4,8,2, 14, 27,13, 1, 3, 17, 96]
@@ -284,4 +221,102 @@ list_copy = copy.deepcopy(list_to_sort)
 #print(selection_sort(list_to_sort))
 #print(buble_sort(list_to_sort))
 #print(merge_sort(list_copy))
+#print(radix_sort(list_to_sort))
 
+
+
+#fonction test performance
+
+def test_perf_loop(function: callable, list_to_mix, nb_execution):
+    start_pc = time.perf_counter()
+    for i in range(0,nb_execution):
+        function(list_to_mix)
+    end_pc = time.perf_counter()
+    return (end_pc - start_pc) / nb_execution
+
+def test_perf_extract(fonction1:callable, fonction2:callable, list_to_extract, nb_extract) ->float:
+    start_pc = time.perf_counter()
+    fonction1(list_to_extract, nb_extract)
+    end_pc = time.perf_counter()
+    extract_temps = (end_pc - start_pc) / nb_extract
+
+    start_pc = time.perf_counter()
+    fonction2(list_to_extract, 10000)
+    end_pc = time.perf_counter()
+    sample_temps = (end_pc - start_pc) / nb_extract
+    
+    return extract_temps, sample_temps
+
+#testu
+list_random_10 = gen_list_random_int(10,0,10)
+list_random_50 = gen_list_random_int(50,0,50)
+list_random_100 = gen_list_random_int(100,0,100)
+list_random_250 = gen_list_random_int(250,0,250)
+list_random_500 = gen_list_random_int(500,0,500)
+list_random_750 = gen_list_random_int(750,0,750)
+list_random_1000 = gen_list_random_int(1000,0,1000)
+list_random_2500 = gen_list_random_int(2500,0,2500)
+
+def test_perf_merge(fonction1:callable, nb_execution) -> float:
+    list_serie_test = []
+
+    list_serie_test.append(test_perf_loop(fonction1, list_random_10, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_50, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_100, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_250, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_500, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_750, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_750, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_750, nb_execution))
+
+    return list_serie_test
+
+def test_perf(fonction1:callable, nb_execution) -> float:
+    list_serie_test = []
+
+    list_serie_test.append(test_perf_loop(fonction1, list_random_10, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_50, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_100, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_250, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_500, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_750, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_1000, nb_execution))
+    list_serie_test.append(test_perf_loop(fonction1, list_random_2500, nb_execution))
+
+    return list_serie_test
+print("sorted")
+sorted_time = test_perf(sorted, 100)
+print("insertion")
+insertion_time = test_perf(insertion_sort, 100)
+print("selection")
+selection_time = test_perf(selection_sort, 100)
+print("bubble")
+bubble_time = test_perf(buble_sort, 100)
+print("merge")
+merge_time = test_perf_merge(merge_sort, 100)
+print("radix")
+radix_time = test_perf(sorted, 100)
+print("perso")
+perso_time = test_perf(mix_list, 100)
+
+def graph(sorted, perso, insertion, selection, bubble, merge, radix):
+    list_ordonnees = [10,50,100,250,500,750,1000,2500]
+    #Ici on décrit les abscisses
+    #Entre 0 et 5 en 10 points
+    x_axis_list = np.arange(0,0.0002)
+    fig, ax = plt.subplots()
+    #Dessin des courbes, le premier paramètre
+    #correspond aux point d'abscisse le
+    #deuxième correspond aux points d'ordonnées
+    ax.plot(sorted,list_ordonnees, 'b*-', label='sorted')
+    ax.plot(perso,list_ordonnees,'r*-', label='perso')
+    ax.plot(insertion,list_ordonnees,'g*-', label='insertion')
+    ax.plot(selection,list_ordonnees,'y*-', label='selection')
+    ax.plot(bubble,list_ordonnees,'c*-', label='bubble')
+    ax.plot(merge,list_ordonnees,'k*-', label='fusion')
+    ax.plot(radix,list_ordonnees,'m*-', label='base')
+    ax.set(xlabel='Abscisse x', ylabel='Ordonnée y',title='test performance')
+    ax.legend(loc='upper center', shadow=True, fontsize='x-large')
+    plt.show()
+
+graph(sorted_time, perso_time, insertion_time, selection_time, bubble_time, merge_time, radix_time)
