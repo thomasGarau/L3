@@ -1,0 +1,55 @@
+def add(n):
+    if n == 0:
+        return 0
+    else:
+        return n + add(n-1)
+
+def zero(n):
+    if n%10 == 0:
+        return True
+    elif n < 10:
+        return False
+    else:
+        return zero(n//10) 
+
+def puissance(x,n):
+    if n == 0:
+        return 1
+    else:
+        if n > 0:
+            return x * puissance(x, n-1)
+        else: 
+            return puissance(x,n+1)/x
+
+def fibonacci(n):
+    if n == 1 or n == 0:
+        return 1
+    else:
+        return (fibonacci(n-1) + fibonacci(n-2))
+
+
+#print(add(10))
+#print(zero(15))
+#print(zero(150778))
+#print(zero(0))
+#print(puissance(10,3))
+#print(puissance(10,0))
+#print(puissance(10,-3))
+#fibonacci(10)
+
+
+def acceptable():
+def reine(tab, n):
+    if n == 8:
+        trouve = True
+        return
+    
+    for i in range(8):
+        if(acceptable(tab, n, i)):
+            tab[n] = i
+            reine(tab, n+1)
+            if trouve:
+                return
+            tab[n]= -1
+tab = [-1]*8
+print(reine(tab, 0))

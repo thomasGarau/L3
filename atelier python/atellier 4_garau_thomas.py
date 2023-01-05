@@ -191,7 +191,7 @@ def merge(list_a, list_b) -> list:
 
 def radix_sort(list_to_sort:list)->list:
     list_copy = copy.deepcopy(list_to_sort)
-    f = len(str(list_to_sort))
+    f = len(list_to_sort)
     for i in range(0, f):
         list_copy = radix_order_sort(10**i, list_copy)  
     return list_copy
@@ -295,7 +295,7 @@ bubble_time = test_perf(buble_sort, 100)
 print("merge")
 merge_time = test_perf_merge(merge_sort, 100)
 print("radix")
-radix_time = test_perf(sorted, 100)
+radix_time = test_perf(radix_sort, 100)
 print("perso")
 perso_time = test_perf(mix_list, 100)
 
