@@ -30,8 +30,8 @@ public class Addition implements CalculatorOperation {
 		return result;
 	}
 
-	public void setResult(double result) {
-		this.result = result;
+	public void setResult() {
+		this.result = this.right + this.left;
 	}
 
   }
