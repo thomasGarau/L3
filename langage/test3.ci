@@ -1,0 +1,6 @@
+public class TestClassu{
+    private String monString 
+    public TestClassu(){
+        
+    }
+}

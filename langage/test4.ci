@@ -1,0 +1,14 @@
+public class TestString{
+
+    public static void Main(string[] args)
+    {
+        List<int>() tenzeros;
+        for(int i = 0; i<10; i++){
+            tenzeros.Add(0);
+        }
+        
+        foreach(int e in tenzeros){
+            Console.WriteLine(e);
+        }
+    }
+}

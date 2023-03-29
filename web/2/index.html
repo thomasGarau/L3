@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <script src="./index.js"></script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="score_div">
+        <h3 id="score_joueur">0 victoires</h3>
+    </div>
+    <div class="main">
+        <h3>Jeu Amour</h3>
+        <title>Amour</title>
+        <label>Choix joueur</label>
+        <input class="valeur" name="valeur" id="valeur">
+        <label>Choix Bot </label>
+        </input><input value="" id="valueBot" class="valeurBot"></input>
+        <br />
+        <label>Somme joueur</label>
+        <input class="somme" name="somme" id="somme"></input>
+        <label>Somme bot</label>
+        <input id="sommeBot" class="sommeBot" value=""></input>
+        <br />
+        <input class="input" name="input" id="input" type="button" value="Jouer"
+            onclick="main(valeur.value, somme.value)"></input>
+        <br />
+        <label>Resultat</label>
+        <input id="response" value="" readonly>
+        <br />
+
+        <label>Save</label>
+        <br />
+        <div class="div_save">
+            <input name="score" value="" id="score" type="hidden">
+            <label>Pseudo</label>
+            <input name="pseudo" id="pseudo" value="">
+            <input name="send_score" type="button" value="Save" onclick="save(pseudo.value, score.value)">
+        </div>
+    </div>
+</body>
+
+</html>
