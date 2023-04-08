@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+<//---------------------------------------------------------------------------
 
 #pragma hdrstop
 
@@ -154,9 +154,12 @@ int recursif(int i){
     }
 }
 
-//2 le prie cas correspond à n => autrement dit la clés ce trouve au dernier index du tableau il doit donc être parcourus en entier
-//2 le meilleur cas correspond à 1 => la valeur ce trouve au premier index du tableau;
-//si la clé appartient pas au tableau on va ce prendre un index out of bounds est ca c'est pas foux foux
+//2 le prie cas correspond à n => autrement dit la clés ce trouve au 
+//dernier index du tableau il doit donc être parcourus en entier
+//2 le meilleur cas correspond à 1 => la valeur ce trouve au premier 
+//index du tableau;
+//si la clé appartient pas au tableau on va ce prendre un index out of 
+//bounds est ca c'est pas foux foux
 //modification ajouté une vérification que i n'est pas suppérieur à i 
 
 int dicothomique(int tab[10], int min, int max, int key){
