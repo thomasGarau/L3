@@ -58,8 +58,7 @@ void insereClef(int indice,int clef)
     if (tab[indice]==-1)
         tab[indice]=clef;
     else 
-       tab[collision(indice)] = clef;
-        
+       tab[collision(indice)] = clef; 
 }
 
 void supprimeClef(int clef)
